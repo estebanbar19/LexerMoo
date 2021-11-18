@@ -1,5 +1,5 @@
 // @ts-check
-import pkg from "../node_modules/moo/moo.js";
+import pkg from "moo";
 
 const {compile} = pkg;
 
