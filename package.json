@@ -42,10 +42,10 @@
   "devDependencies": {
     "benchr": "^3.2.0",
     "chevrotain": "4.2.0",
-    "jest": "24.7.1",
+    "jest": "^27.3.1",
     "lex": "^1.7.9",
     "lexing": "^0.8.0",
-    "remix": "^0.1.4",
+    "remix": "^0.21.0",
     "tokenizer2": "^2.0.0"
   },
   "files": [
@@ -64,5 +64,9 @@
     "moo": "echo 'Mooooo!'",
     "test": "jest ."
   },
-  "version": "0.5.1"
+  "version": "0.5.1",
+  "dependencies": {
+    "live-server": "^1.2.1",
+    "moo": "^0.5.1"
+  }
 }
