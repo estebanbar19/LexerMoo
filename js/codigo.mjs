@@ -1,12 +1,8 @@
 // @ts-check
 // @ts-ignore
-import pkg from "moo";
 
-const {compile} = pkg;
-
-//import { compile } from "moo";
-
-// [ \w]+\(+[\w\d \,\-]*?\)
+const moo = require('moo');
+const {compile} = moo;
 
 // @ts-ignore
 let lexer = compile({
