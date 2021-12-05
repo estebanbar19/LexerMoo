@@ -67,6 +67,7 @@
   "version": "0.5.1",
   "dependencies": {
     "live-server": "^1.2.1",
-    "moo": "^0.5.1"
+    "moo": "^0.5.1",
+    "nearley": "^2.20.1"
   }
 }

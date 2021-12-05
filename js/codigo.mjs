@@ -23,11 +23,6 @@ let lexer = compile({
     NL:      { match: /\n/, lineBreaks: true },
 })
 
-lexer.reset('entero genesis(num1){impresion#"La suma de pares es: "#par#salto|}')
-for(let here of lexer){
-    console.log(here.type+": "+here.value);
-}
-
 
 // /[a-zA-Z]+[ ]+[a-zA-Z]+[ (]+[a-zA-Z,- ]+[)]/
 // entero genesis( adn  , arn, num-1, num-2)
@@ -50,18 +45,4 @@ for(let here of lexer){
 
 // 	apocalipsis|
 	
-// }
-
-
-
-// var texto = document.getElementById("texto");
-// var btn = document.getElementById("btn");
-
-// texto.oninput = ()=>{
-//     // @ts-ignore
-//     console.log(texto.value);
-// }
-
-// btn.onclick = ()=>{
-//     console.log(texto.nodeValue)
 // }
