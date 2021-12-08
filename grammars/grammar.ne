@@ -71,7 +71,7 @@ operacionlogica -> %number %WS "menorQue" %WS %number {% (d) => (d[0] < d[4]) %}
 
 suma -> %string espacioEnBlanco "+" espacioEnBlanco %string %finLinea {% (d) => 'console.log('+d[0]+'+'+d[4]+');' %}
 
-declaraciones -> "entero" espacioEnBlanco %string espacioEnBlanco %asignacion espacioEnBlanco %number espacioEnBlanco cierreLinea {% (d) => 'let '+d[2]+' = '+d[6]+'; console.log('+d[2]+')' %} | "logico" espacioEnBlanco %string espacioEnBlanco %asignacion espacioEnBlanco "true" espacioEnBlanco cierreLinea {% function(d){  } %}| "logico" espacioEnBlanco %string espacioEnBlanco %asignacion espacioEnBlanco "false" espacioEnBlanco cierreLinea {% function(d){  } %}
+declaraciones -> "entero" espacioEnBlanco %string espacioEnBlanco %asignacion espacioEnBlanco (%string|%number) espacioEnBlanco cierreLinea {% (d) => 'let '+d[2]+' = '+d[6]+'; console.log('+d[2]+')' %} | "logico" espacioEnBlanco %string espacioEnBlanco %asignacion espacioEnBlanco "true" espacioEnBlanco cierreLinea {% function(d){  } %}| "logico" espacioEnBlanco %string espacioEnBlanco %asignacion espacioEnBlanco "false" espacioEnBlanco cierreLinea {% function(d){  } %}
 
 #inicializacion -> espacioEnBlanco %string espacioEnBlanco %asignacion espacioEnBlanco %number %finLinea | espacioEnBlanco %string espacioEnBlanco %asignacion espacioEnBlanco "false" %finLinea | espacioEnBlanco %string espacioEnBlanco %asignacion espacioEnBlanco "true" %finLinea
 
