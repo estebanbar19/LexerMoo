@@ -28,17 +28,16 @@ const lexer = compile({
 
 input -> statement {% (d) => eval(''+d[0]+';') %}
 
-statement -> operacion | impStatement | declaracion | declaracion statement findelinea {% (d) => ''+d[0]+''+d[1] %} | statement impStatement findelinea {% (d) => ''+d[0]+''+d[1] %} 
+statement -> operacion | impStatement | declaracion | declaracion statement findelinea {% (d) => ''+d[0]+''+d[1] %} | statement impStatement findelinea {% (d) => ''+d[0]+''+d[1] %} | statement %NL statement {% (d) => d[0]+'; '+d[2] %}
 
 impStatement -> "impresion#" imp {% (d) => 'console.log('+d[1]+')' %}
 
-imp -> findelinea | %stringQuotes findelinea {% (d) => d[0] %} | imp "#" %string findelinea {% (d) => d[0]+'+'+d[2] %} | imp "#" %string "#" imp findelinea {% (d) => d[0]+'+'+d[2]+'+'+d[4] %} | imp "#" operacion findelinea {% (d) => ''+d[0]+'+('+d[2]+')' %}
-# | imp "#" operacion findelinea {% (d) => d[0]+'+'+eval('+d[2]+')+''  %} | imp "#" operacion "#" imp findelinea {% (d) => d[0]+'+'+d[2]+'+'+d[4] %}
+imp -> %stringQuotes findelinea {% (d) => d[0] %} | imp "#" %string findelinea {% (d) => d[0]+'+'+d[2] %} | imp "#" %string "#" imp findelinea {% (d) => d[0]+'+'+d[2]+'+'+d[4] %} | imp "#" operacion findelinea {% (d) => ''+d[0]+'+('+d[2]+')' %} | imp "#" operacion "#" imp findelinea {% (d) => ''+d[0]+'+('+d[2]+')+'+d[4] %}
 
 operacion -> %string espacioEnBlanco "+" espacioEnBlanco %string findelinea {% (d) => ''+d[0]+'+'+d[4]+'' %} | %string espacioEnBlanco "-" espacioEnBlanco %string findelinea {% (d) => ''+d[0]+'-'+d[4]+'' %} | %string espacioEnBlanco "*" espacioEnBlanco %string findelinea {% (d) => ''+d[0]+'*'+d[4]+'' %} | %string espacioEnBlanco "/" espacioEnBlanco %string findelinea {% (d) => ''+d[0]+'/'+d[4]+'' %}
 
 declaracion -> "entero" espacioEnBlanco %string espacioEnBlanco "<<<" espacioEnBlanco %number findelinea {% (d) => 'let '+d[2]+' = '+d[6]+';'  %}
 
-findelinea -> espacioEnBlanco | %NL | %finLinea findelinea
+findelinea -> espacioEnBlanco | %NL {% (d) => '' %} | %finLinea findelinea {% (d) => ';' %}
 
-espacioEnBlanco -> null | espacioEnBlanco %WS
+espacioEnBlanco -> null | espacioEnBlanco %WS {% (d) => ' ' %}

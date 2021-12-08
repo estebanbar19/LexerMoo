@@ -35,22 +35,23 @@ var grammar = {
     {"name": "statement", "symbols": ["declaracion"]},
     {"name": "statement", "symbols": ["declaracion", "statement", "findelinea"], "postprocess": (d) => ''+d[0]+''+d[1]},
     {"name": "statement", "symbols": ["statement", "impStatement", "findelinea"], "postprocess": (d) => ''+d[0]+''+d[1]},
+    {"name": "statement", "symbols": ["statement", (lexer.has("NL") ? {type: "NL"} : NL), "statement"], "postprocess": (d) => d[0]+'; '+d[2]},
     {"name": "impStatement", "symbols": [{"literal":"impresion#"}, "imp"], "postprocess": (d) => 'console.log('+d[1]+')'},
-    {"name": "imp", "symbols": ["findelinea"]},
     {"name": "imp", "symbols": [(lexer.has("stringQuotes") ? {type: "stringQuotes"} : stringQuotes), "findelinea"], "postprocess": (d) => d[0]},
     {"name": "imp", "symbols": ["imp", {"literal":"#"}, (lexer.has("string") ? {type: "string"} : string), "findelinea"], "postprocess": (d) => d[0]+'+'+d[2]},
     {"name": "imp", "symbols": ["imp", {"literal":"#"}, (lexer.has("string") ? {type: "string"} : string), {"literal":"#"}, "imp", "findelinea"], "postprocess": (d) => d[0]+'+'+d[2]+'+'+d[4]},
     {"name": "imp", "symbols": ["imp", {"literal":"#"}, "operacion", "findelinea"], "postprocess": (d) => ''+d[0]+'+('+d[2]+')'},
+    {"name": "imp", "symbols": ["imp", {"literal":"#"}, "operacion", {"literal":"#"}, "imp", "findelinea"], "postprocess": (d) => ''+d[0]+'+('+d[2]+')+'+d[4]},
     {"name": "operacion", "symbols": [(lexer.has("string") ? {type: "string"} : string), "espacioEnBlanco", {"literal":"+"}, "espacioEnBlanco", (lexer.has("string") ? {type: "string"} : string), "findelinea"], "postprocess": (d) => ''+d[0]+'+'+d[4]+''},
     {"name": "operacion", "symbols": [(lexer.has("string") ? {type: "string"} : string), "espacioEnBlanco", {"literal":"-"}, "espacioEnBlanco", (lexer.has("string") ? {type: "string"} : string), "findelinea"], "postprocess": (d) => ''+d[0]+'-'+d[4]+''},
     {"name": "operacion", "symbols": [(lexer.has("string") ? {type: "string"} : string), "espacioEnBlanco", {"literal":"*"}, "espacioEnBlanco", (lexer.has("string") ? {type: "string"} : string), "findelinea"], "postprocess": (d) => ''+d[0]+'*'+d[4]+''},
     {"name": "operacion", "symbols": [(lexer.has("string") ? {type: "string"} : string), "espacioEnBlanco", {"literal":"/"}, "espacioEnBlanco", (lexer.has("string") ? {type: "string"} : string), "findelinea"], "postprocess": (d) => ''+d[0]+'/'+d[4]+''},
     {"name": "declaracion", "symbols": [{"literal":"entero"}, "espacioEnBlanco", (lexer.has("string") ? {type: "string"} : string), "espacioEnBlanco", {"literal":"<<<"}, "espacioEnBlanco", (lexer.has("number") ? {type: "number"} : number), "findelinea"], "postprocess": (d) => 'let '+d[2]+' = '+d[6]+';'},
     {"name": "findelinea", "symbols": ["espacioEnBlanco"]},
-    {"name": "findelinea", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
-    {"name": "findelinea", "symbols": [(lexer.has("finLinea") ? {type: "finLinea"} : finLinea), "findelinea"]},
+    {"name": "findelinea", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)], "postprocess": (d) => ''},
+    {"name": "findelinea", "symbols": [(lexer.has("finLinea") ? {type: "finLinea"} : finLinea), "findelinea"], "postprocess": (d) => ';'},
     {"name": "espacioEnBlanco", "symbols": []},
-    {"name": "espacioEnBlanco", "symbols": ["espacioEnBlanco", (lexer.has("WS") ? {type: "WS"} : WS)]}
+    {"name": "espacioEnBlanco", "symbols": ["espacioEnBlanco", (lexer.has("WS") ? {type: "WS"} : WS)], "postprocess": (d) => ' '}
 ]
   , ParserStart: "input"
 }

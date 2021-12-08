@@ -75,7 +75,7 @@ declaraciones -> "entero" espacioEnBlanco %string espacioEnBlanco %asignacion es
 
 #inicializacion -> espacioEnBlanco %string espacioEnBlanco %asignacion espacioEnBlanco %number %finLinea | espacioEnBlanco %string espacioEnBlanco %asignacion espacioEnBlanco "false" %finLinea | espacioEnBlanco %string espacioEnBlanco %asignacion espacioEnBlanco "true" %finLinea
 
-cierreLinea -> null | cierreLinea %finLinea
+cierreLinea -> null | %finLinea
 
 espacioEnBlanco -> null | espacioEnBlanco %WS
 
