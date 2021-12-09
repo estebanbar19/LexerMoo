@@ -29,14 +29,20 @@ const lexer = compile({
 
 input -> "," findelinea statements findelinea "," {% (d) => eval(''+d[2]+';') %} 
 #"," findelinea statements findelinea "," {% (d) => console.log(''+d[2]+';') %}
-#"," findelinea statements findelinea "," {% (d) => eval(''+d[3]+';') %} 
+#"," findelinea statements findelinea "," {% (d) => eval(''+d[2]+';') %} 
 
 statement -> ifStatement "|" {% (d) => d[0] %} 
         | whileStatement "|" {% (d) => d[0] %} 
+        | forStatement "|" {% (d) => d[0] %} 
+        | doWhileStatement "|" {% (d) => d[0] %} 
 
-ifStatement -> "si" (espacioEnBlanco | null) %lparen operacionlogica %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket {% (d) => 'if('+d[3]+'){'+d[10]+'}' %}
+ifStatement -> "si" (espacioEnBlanco | null) %lparen operacionlogica %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket {% (d) => 'if('+d[3]+'){'+d[10]+'}' %} | ifStatement (espacioEnBlanco | null) "sin't" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket {% (d) => ''+d[0]+'else{'+d[6]+'}' %}
 
 whileStatement -> "mientrasQue" (espacioEnBlanco | null) %lparen operacionlogica %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket {% (d) => 'while('+d[3]+'){'+d[10]+'}' %}
+
+doWhileStatement -> "hacer" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) "mientrasQue" (espacioEnBlanco | null) %lparen operacionlogica %rparen {% (d) => 'do{'+d[4]+'}while('+d[11]+')' %}
+
+forStatement -> "Para" (espacioEnBlanco | null) %lparen (espacioEnBlanco | null) declaracion (espacioEnBlanco | null) "|" (espacioEnBlanco | null) operacionlogica (espacioEnBlanco | null) "|" (espacioEnBlanco | null) (operacion | operacionCorta | operacionlogica) (espacioEnBlanco | null) %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket {% (d) => 'for('+d[4]+';'+d[8]+';'+d[12]+'){'+d[20]+'}' %}
 
 statements -> statement 
         | statements (%NL | null) statement {% (d) => d[0]+'; '+d[2] %}
@@ -70,8 +76,8 @@ operacionlogica -> (%string | %number | %numberDecimal) (espacioEnBlanco | null)
         | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "igualQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) findelinea {% (d) => ''+d[0]+'=='+d[4]+'' %}
         | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "diferenteQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) findelinea {% (d) => ''+d[0]+'!='+d[4]+'' %}
 
-operacionCorta -> (%string | %number) "_mas mas" findelinea {% (d) => ''+d[0]+'+1' %}
-        | (%string | %number) "_menos menos" findelinea {% (d) => ''+d[0]+'-1' %}
+operacionCorta -> (%string | %number) "_mas mas" findelinea {% (d) => ''+d[0]+'+=1' %}
+        | (%string | %number) "_menos menos" findelinea {% (d) => ''+d[0]+'-=1' %}
 
 declaracion -> "entero" (espacioEnBlanco | null) %string (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) %number findelinea {% (d) => 'let '+d[2]+' = '+d[6]+''  %} 
         | "logico" (espacioEnBlanco | null) %string (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) ("true" | "false") findelinea {% (d) => 'let '+d[2]+' = '+d[6]+''  %} 
