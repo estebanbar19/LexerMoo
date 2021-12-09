@@ -9,7 +9,7 @@ let button = document.getElementById("btn");
 button.onclick = function () {
     parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar), { keepHistory: true });
     console.log(text.value);
-    parser.feed(text.value);
-    if (parser.results.length > 1) throw new Error('grammar is ambiguous');
+    parser.feed(",\n"+text.value+"\n,");
     console.log(parser.results);
+    if (parser.results.length > 1) throw new Error('grammar is ambiguous');
 }

@@ -27,7 +27,7 @@ const lexer = compile({
 
 @lexer lexer
 
-input -> "," findelinea statements findelinea "," {% (d) => eval(''+d[2]+';') %} 
+input -> "," findelinea statements findelinea "," {% (d) => eval('let textoEjecucion = document.getElementById("textoEjecucion"); '+d[2]+';') %} 
 #"," findelinea statements findelinea "," {% (d) => console.log(''+d[2]+';') %}
 #"," findelinea statements findelinea "," {% (d) => eval(''+d[2]+';') %} 
 
@@ -53,7 +53,8 @@ statement -> operacion
         | asignacion
         | operacionCorta
 
-impStatement -> "impresion#" imp findelinea {% (d) => 'console.log('+d[1]+')' %}
+impStatement -> "impresion#" imp findelinea {% (d) => 'textoEjecucion.innerHTML = textoEjecucion.innerHTML+'+d[1]+'' %}
+#"impresion#" imp findelinea {% (d) => 'console.log('+d[1]+')' %}
 
 imp -> %string {% (d) => d[0] %} 
         | (operacion | operacionCorta) {% (d) => '('+d[0]+')' %} 
@@ -69,12 +70,12 @@ operacion -> (%string | %number) (espacioEnBlanco | null) "+" (espacioEnBlanco |
         | (%string | %number) (espacioEnBlanco | null) "*" (espacioEnBlanco | null) ((%string | %number) | operacion) findelinea {% (d) => ''+d[0]+'*'+d[4]+'' %} 
         | (%string | %number) (espacioEnBlanco | null) "/" (espacioEnBlanco | null) ((%string | %number) | operacion) findelinea {% (d) => ''+d[0]+'/'+d[4]+'' %}
 
-operacionlogica -> (%string | %number | %numberDecimal) (espacioEnBlanco | null) "mayorQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) findelinea {% (d) => ''+d[0]+'>'+d[4]+'' %}
-        | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "menorQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) findelinea {% (d) => ''+d[0]+'<'+d[4]+'' %}
-        | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "mayorIgualQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) findelinea {% (d) => ''+d[0]+'>='+d[4]+'' %}
-        | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "menorIgualQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) findelinea {% (d) => ''+d[0]+'<='+d[4]+'' %}
-        | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "igualQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) findelinea {% (d) => ''+d[0]+'=='+d[4]+'' %}
-        | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "diferenteQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) findelinea {% (d) => ''+d[0]+'!='+d[4]+'' %}
+operacionlogica -> (%string | %number | %numberDecimal) (espacioEnBlanco | null) "mayorQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'>'+d[4]+'' %}
+        | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "menorQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'<'+d[4]+'' %}
+        | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "mayorIgualQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'>='+d[4]+'' %}
+        | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "menorIgualQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'<='+d[4]+'' %}
+        | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "igualQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'=='+d[4]+'' %}
+        | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "diferenteQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'!='+d[4]+'' %}
 
 operacionCorta -> (%string | %number) "_mas mas" findelinea {% (d) => ''+d[0]+'+=1' %}
         | (%string | %number) "_menos menos" findelinea {% (d) => ''+d[0]+'-=1' %}
@@ -84,7 +85,7 @@ declaracion -> "entero" (espacioEnBlanco | null) %string (espacioEnBlanco | null
         | ("decimalC" | "decimalL") (espacioEnBlanco | null) %string (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) (%numberDecimal | %number) findelinea {% (d) => 'let '+d[2]+' = '+d[6]+''  %}
 
 findelinea -> espacioEnBlanco 
-        | %NL:* {% (d) => '' %} 
+        | %NL
         | %finLinea findelinea {% (d) => ';' %}
 
 espacioEnBlanco -> %WS {% (d) => ' ' %}

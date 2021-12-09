@@ -4,14 +4,15 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="css/estilos.css">
+        <link rel="stylesheet" href="css/estilos.css">
     </head>
     <body>
         <header>
-            <h1>PRUEBA LEXER</h1>
+            <h1>Compilador codigo DEVp</h1>
         </header>
-        <div><textarea id="texto" style="width: 60%; height: 30rem;">
-,
+        <main>
+            <div id="codigo">
+<textarea id="texto">
 entero num <<< 8|
 entero nummer <<< 6|
 impresion#"El valor es: "#num+nummer|
@@ -26,9 +27,12 @@ impresion#"El valor es: "#num|
 num_mas mas|
 }mientrasQue(num menorQue 12)|
 
-}|
-,</textarea></div>
-    <input type="button" id="btn" value="Ejecutar"></button>
+}|</textarea></div>
+                    <div id="consola">
+                        <textarea id="textoEjecucion" readonly></textarea>
+                    </div>
+        </main>
+        <input type="button" id="btn" value="Ejecutar"></button>
     </body>
     <script type="module" src="bundle.js"></script>
     <!-- <script src="grammar.js"></script> -->

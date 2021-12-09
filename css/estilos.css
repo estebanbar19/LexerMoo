@@ -1,0 +1,62 @@
+:root{
+    scroll-behavior: smooth;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+body{
+    position: relative;
+    width: 100%;
+    background-color: rgba(40, 40, 40, 0.5);
+}
+
+header h1{
+    align-self: center;
+    text-align: center;
+    margin: .5rem;
+    color: white;
+    font-weight: bold;
+}
+
+body input{
+    width: 5rem;
+    padding: .5rem;
+    align-self: center;
+    text-align: center;
+    align-items: center;
+    border-radius: 10px;
+    margin-left: 47.2%;
+    cursor: pointer;
+}
+
+main{
+    width: 100%;
+    display: flex;
+}
+
+#codigo{
+    background-color: white;
+    color: black;
+    width: 38%;
+    margin: 0% 4% 0% 8%;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+#consola{
+    background-color: white;
+    color: black;
+    width: 38%;
+    margin: 0% 8% 0% 4%;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+#texto, #textoEjecucion{
+    width: 99%;
+    height: 34rem;
+}
