@@ -32,10 +32,10 @@ var grammar = {
     Lexer: lexer,
     ParserRules: [
     {"name": "input", "symbols": [{"literal":","}, "findelinea", "statements", "findelinea", {"literal":","}], "postprocess": (d) => eval('let textoEjecucion = document.getElementById("textoEjecucion"); '+d[2]+';')},
-    {"name": "statement", "symbols": ["ifStatement", {"literal":"|"}], "postprocess": (d) => d[0]},
-    {"name": "statement", "symbols": ["whileStatement", {"literal":"|"}], "postprocess": (d) => d[0]},
-    {"name": "statement", "symbols": ["forStatement", {"literal":"|"}], "postprocess": (d) => d[0]},
-    {"name": "statement", "symbols": ["doWhileStatement", {"literal":"|"}], "postprocess": (d) => d[0]},
+    {"name": "statement", "symbols": ["ifStatement"], "postprocess": (d) => d[0]},
+    {"name": "statement", "symbols": ["whileStatement"], "postprocess": (d) => d[0]},
+    {"name": "statement", "symbols": ["forStatement"], "postprocess": (d) => d[0]},
+    {"name": "statement", "symbols": ["doWhileStatement"], "postprocess": (d) => d[0]},
     {"name": "ifStatement$subexpression$1", "symbols": ["espacioEnBlanco"]},
     {"name": "ifStatement$subexpression$1", "symbols": []},
     {"name": "ifStatement$subexpression$2", "symbols": ["espacioEnBlanco"]},
@@ -50,11 +50,15 @@ var grammar = {
     {"name": "ifStatement$ebnf$2$subexpression$1", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
     {"name": "ifStatement$ebnf$2$subexpression$1", "symbols": [(lexer.has("WS") ? {type: "WS"} : WS)]},
     {"name": "ifStatement$ebnf$2", "symbols": ["ifStatement$ebnf$2", "ifStatement$ebnf$2$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "ifStatement", "symbols": [{"literal":"si"}, "ifStatement$subexpression$1", (lexer.has("lparen") ? {type: "lparen"} : lparen), "operacionlogica", (lexer.has("rparen") ? {type: "rparen"} : rparen), "ifStatement$subexpression$2", {"literal":"entonces"}, "ifStatement$subexpression$3", (lexer.has("lbracket") ? {type: "lbracket"} : lbracket), "ifStatement$ebnf$1", "statements", "ifStatement$ebnf$2", (lexer.has("rbracket") ? {type: "rbracket"} : rbracket)], "postprocess": (d) => 'if('+d[3]+'){'+d[10]+'}'},
     {"name": "ifStatement$subexpression$4", "symbols": ["espacioEnBlanco"]},
     {"name": "ifStatement$subexpression$4", "symbols": []},
-    {"name": "ifStatement$subexpression$5", "symbols": ["espacioEnBlanco"]},
+    {"name": "ifStatement$subexpression$5", "symbols": ["findelinea"]},
     {"name": "ifStatement$subexpression$5", "symbols": []},
+    {"name": "ifStatement", "symbols": [{"literal":"si"}, "ifStatement$subexpression$1", (lexer.has("lparen") ? {type: "lparen"} : lparen), "operacionlogica", (lexer.has("rparen") ? {type: "rparen"} : rparen), "ifStatement$subexpression$2", {"literal":"entonces"}, "ifStatement$subexpression$3", (lexer.has("lbracket") ? {type: "lbracket"} : lbracket), "ifStatement$ebnf$1", "statements", "ifStatement$ebnf$2", (lexer.has("rbracket") ? {type: "rbracket"} : rbracket), "ifStatement$subexpression$4", "ifStatement$subexpression$5"], "postprocess": (d) => 'if('+d[3]+'){'+d[10]+'}'},
+    {"name": "ifStatement$subexpression$6", "symbols": ["espacioEnBlanco"]},
+    {"name": "ifStatement$subexpression$6", "symbols": []},
+    {"name": "ifStatement$subexpression$7", "symbols": ["espacioEnBlanco"]},
+    {"name": "ifStatement$subexpression$7", "symbols": []},
     {"name": "ifStatement$ebnf$3", "symbols": []},
     {"name": "ifStatement$ebnf$3$subexpression$1", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
     {"name": "ifStatement$ebnf$3$subexpression$1", "symbols": [(lexer.has("WS") ? {type: "WS"} : WS)]},
@@ -63,7 +67,7 @@ var grammar = {
     {"name": "ifStatement$ebnf$4$subexpression$1", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
     {"name": "ifStatement$ebnf$4$subexpression$1", "symbols": [(lexer.has("WS") ? {type: "WS"} : WS)]},
     {"name": "ifStatement$ebnf$4", "symbols": ["ifStatement$ebnf$4", "ifStatement$ebnf$4$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "ifStatement", "symbols": ["ifStatement", "ifStatement$subexpression$4", {"literal":"sin't"}, "ifStatement$subexpression$5", (lexer.has("lbracket") ? {type: "lbracket"} : lbracket), "ifStatement$ebnf$3", "statements", "ifStatement$ebnf$4", (lexer.has("rbracket") ? {type: "rbracket"} : rbracket)], "postprocess": (d) => ''+d[0]+'else{'+d[6]+'}'},
+    {"name": "ifStatement", "symbols": ["ifStatement", "ifStatement$subexpression$6", {"literal":"sin't"}, "ifStatement$subexpression$7", (lexer.has("lbracket") ? {type: "lbracket"} : lbracket), "ifStatement$ebnf$3", "statements", "ifStatement$ebnf$4", (lexer.has("rbracket") ? {type: "rbracket"} : rbracket)], "postprocess": (d) => ''+d[0]+'else{'+d[6]+'}'},
     {"name": "whileStatement$subexpression$1", "symbols": ["espacioEnBlanco"]},
     {"name": "whileStatement$subexpression$1", "symbols": []},
     {"name": "whileStatement$subexpression$2", "symbols": ["espacioEnBlanco"]},
@@ -78,7 +82,11 @@ var grammar = {
     {"name": "whileStatement$ebnf$2$subexpression$1", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
     {"name": "whileStatement$ebnf$2$subexpression$1", "symbols": [(lexer.has("WS") ? {type: "WS"} : WS)]},
     {"name": "whileStatement$ebnf$2", "symbols": ["whileStatement$ebnf$2", "whileStatement$ebnf$2$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "whileStatement", "symbols": [{"literal":"mientrasQue"}, "whileStatement$subexpression$1", (lexer.has("lparen") ? {type: "lparen"} : lparen), "operacionlogica", (lexer.has("rparen") ? {type: "rparen"} : rparen), "whileStatement$subexpression$2", {"literal":"entonces"}, "whileStatement$subexpression$3", (lexer.has("lbracket") ? {type: "lbracket"} : lbracket), "whileStatement$ebnf$1", "statements", "whileStatement$ebnf$2", (lexer.has("rbracket") ? {type: "rbracket"} : rbracket)], "postprocess": (d) => 'while('+d[3]+'){'+d[10]+'}'},
+    {"name": "whileStatement$subexpression$4", "symbols": ["espacioEnBlanco"]},
+    {"name": "whileStatement$subexpression$4", "symbols": []},
+    {"name": "whileStatement$subexpression$5", "symbols": ["findelinea"]},
+    {"name": "whileStatement$subexpression$5", "symbols": []},
+    {"name": "whileStatement", "symbols": [{"literal":"mientrasQue"}, "whileStatement$subexpression$1", (lexer.has("lparen") ? {type: "lparen"} : lparen), "operacionlogica", (lexer.has("rparen") ? {type: "rparen"} : rparen), "whileStatement$subexpression$2", {"literal":"entonces"}, "whileStatement$subexpression$3", (lexer.has("lbracket") ? {type: "lbracket"} : lbracket), "whileStatement$ebnf$1", "statements", "whileStatement$ebnf$2", (lexer.has("rbracket") ? {type: "rbracket"} : rbracket), "whileStatement$subexpression$4", "whileStatement$subexpression$5"], "postprocess": (d) => 'while('+d[3]+'){'+d[10]+'}'},
     {"name": "doWhileStatement$subexpression$1", "symbols": ["espacioEnBlanco"]},
     {"name": "doWhileStatement$subexpression$1", "symbols": []},
     {"name": "doWhileStatement$ebnf$1", "symbols": []},
@@ -93,7 +101,11 @@ var grammar = {
     {"name": "doWhileStatement$subexpression$2", "symbols": []},
     {"name": "doWhileStatement$subexpression$3", "symbols": ["espacioEnBlanco"]},
     {"name": "doWhileStatement$subexpression$3", "symbols": []},
-    {"name": "doWhileStatement", "symbols": [{"literal":"hacer"}, "doWhileStatement$subexpression$1", (lexer.has("lbracket") ? {type: "lbracket"} : lbracket), "doWhileStatement$ebnf$1", "statements", "doWhileStatement$ebnf$2", (lexer.has("rbracket") ? {type: "rbracket"} : rbracket), "doWhileStatement$subexpression$2", {"literal":"mientrasQue"}, "doWhileStatement$subexpression$3", (lexer.has("lparen") ? {type: "lparen"} : lparen), "operacionlogica", (lexer.has("rparen") ? {type: "rparen"} : rparen)], "postprocess": (d) => 'do{'+d[4]+'}while('+d[11]+')'},
+    {"name": "doWhileStatement$subexpression$4", "symbols": ["espacioEnBlanco"]},
+    {"name": "doWhileStatement$subexpression$4", "symbols": []},
+    {"name": "doWhileStatement$subexpression$5", "symbols": ["findelinea"]},
+    {"name": "doWhileStatement$subexpression$5", "symbols": []},
+    {"name": "doWhileStatement", "symbols": [{"literal":"hacer"}, "doWhileStatement$subexpression$1", (lexer.has("lbracket") ? {type: "lbracket"} : lbracket), "doWhileStatement$ebnf$1", "statements", "doWhileStatement$ebnf$2", (lexer.has("rbracket") ? {type: "rbracket"} : rbracket), "doWhileStatement$subexpression$2", {"literal":"mientrasQue"}, "doWhileStatement$subexpression$3", (lexer.has("lparen") ? {type: "lparen"} : lparen), "operacionlogica", (lexer.has("rparen") ? {type: "rparen"} : rparen), "doWhileStatement$subexpression$4", "doWhileStatement$subexpression$5"], "postprocess": (d) => 'do{'+d[4]+'}while('+d[11]+')'},
     {"name": "forStatement$subexpression$1", "symbols": ["espacioEnBlanco"]},
     {"name": "forStatement$subexpression$1", "symbols": []},
     {"name": "forStatement$subexpression$2", "symbols": ["espacioEnBlanco"]},
@@ -123,7 +135,11 @@ var grammar = {
     {"name": "forStatement$ebnf$2$subexpression$1", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
     {"name": "forStatement$ebnf$2$subexpression$1", "symbols": [(lexer.has("WS") ? {type: "WS"} : WS)]},
     {"name": "forStatement$ebnf$2", "symbols": ["forStatement$ebnf$2", "forStatement$ebnf$2$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "forStatement", "symbols": [{"literal":"Para"}, "forStatement$subexpression$1", (lexer.has("lparen") ? {type: "lparen"} : lparen), "forStatement$subexpression$2", "declaracion", "forStatement$subexpression$3", {"literal":"|"}, "forStatement$subexpression$4", "operacionlogica", "forStatement$subexpression$5", {"literal":"|"}, "forStatement$subexpression$6", "forStatement$subexpression$7", "forStatement$subexpression$8", (lexer.has("rparen") ? {type: "rparen"} : rparen), "forStatement$subexpression$9", {"literal":"entonces"}, "forStatement$subexpression$10", (lexer.has("lbracket") ? {type: "lbracket"} : lbracket), "forStatement$ebnf$1", "statements", "forStatement$ebnf$2", (lexer.has("rbracket") ? {type: "rbracket"} : rbracket)], "postprocess": (d) => 'for('+d[4]+';'+d[8]+';'+d[12]+'){'+d[20]+'}'},
+    {"name": "forStatement$subexpression$11", "symbols": ["espacioEnBlanco"]},
+    {"name": "forStatement$subexpression$11", "symbols": []},
+    {"name": "forStatement$subexpression$12", "symbols": ["findelinea"]},
+    {"name": "forStatement$subexpression$12", "symbols": []},
+    {"name": "forStatement", "symbols": [{"literal":"Para"}, "forStatement$subexpression$1", (lexer.has("lparen") ? {type: "lparen"} : lparen), "forStatement$subexpression$2", "declaracion", "forStatement$subexpression$3", {"literal":"|"}, "forStatement$subexpression$4", "operacionlogica", "forStatement$subexpression$5", {"literal":"|"}, "forStatement$subexpression$6", "forStatement$subexpression$7", "forStatement$subexpression$8", (lexer.has("rparen") ? {type: "rparen"} : rparen), "forStatement$subexpression$9", {"literal":"entonces"}, "forStatement$subexpression$10", (lexer.has("lbracket") ? {type: "lbracket"} : lbracket), "forStatement$ebnf$1", "statements", "forStatement$ebnf$2", (lexer.has("rbracket") ? {type: "rbracket"} : rbracket), "forStatement$subexpression$11", "forStatement$subexpression$12"], "postprocess": (d) => 'for('+d[4]+';'+d[8]+';'+d[12]+'){'+d[20]+'}'},
     {"name": "statements", "symbols": ["statement"]},
     {"name": "statements$subexpression$1", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
     {"name": "statements$subexpression$1", "symbols": []},
@@ -352,9 +368,11 @@ const grammar = require("../grammar.js");
 var parser;
 
 let text = document.getElementById("texto");
+let textEjecucion = document.getElementById("textoEjecucion");
 let button = document.getElementById("btn");
 
 button.onclick = function () {
+    textEjecucion.innerHTML = '';
     parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar), { keepHistory: true });
     console.log(text.value);
     parser.feed(",\n"+text.value+"\n,");
