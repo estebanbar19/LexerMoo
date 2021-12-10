@@ -19,30 +19,36 @@ const lexer = compile({
     rparen:  ')',
     lbracket: '{',
     rbracket: '}',
+    lcorch: '[',
+    rcorch: ']',
     finLinea: '|',
-    characterKey: ['#', ','],
+    characterKey: ['#', ',' , '~'],
     NL:      { match: /\n/, lineBreaks: true },
 });
 %}
 
 @lexer lexer
 
-input -> "," findelinea statements findelinea "," {% (d) => eval('let textoEjecucion = document.getElementById("textoEjecucion"); '+d[2]+';') %} 
+input -> "~" findelinea statements findelinea "~" {% (d) => console.log(''+d[2]+';') %}
 #"," findelinea statements findelinea "," {% (d) => console.log(''+d[2]+';') %}
-#"," findelinea statements findelinea "," {% (d) => eval(''+d[2]+';') %} 
+#"," findelinea statements findelinea "," {% (d) => eval('let textoEjecucion = document.getElementById("textoEjecucion"); '+d[2]+';') %} 
 
 statement -> ifStatement {% (d) => d[0] %} 
         | whileStatement {% (d) => d[0] %} 
         | forStatement {% (d) => d[0] %} 
         | doWhileStatement {% (d) => d[0] %} 
 
-ifStatement -> "si" (espacioEnBlanco | null) %lparen operacionlogica %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'if('+d[3]+'){'+d[10]+'}' %} | ifStatement (espacioEnBlanco | null) "sin't" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket {% (d) => ''+d[0]+'else{'+d[6]+'}' %}
+ifStatement -> "si" (espacioEnBlanco | null) %lparen operacionlogica %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'if('+d[3]+'){'+d[10]+'}' %} | ifStatement (espacioEnBlanco | null) "sin't" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'else{'+d[6]+'}' %}
 
 whileStatement -> "mientrasQue" (espacioEnBlanco | null) %lparen operacionlogica %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'while('+d[3]+'){'+d[10]+'}' %}
 
 doWhileStatement -> "hacer" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) "mientrasQue" (espacioEnBlanco | null) %lparen operacionlogica %rparen (espacioEnBlanco | null) (findelinea | null) {% (d) => 'do{'+d[4]+'}while('+d[11]+')' %}
 
 forStatement -> "Para" (espacioEnBlanco | null) %lparen (espacioEnBlanco | null) declaracion (espacioEnBlanco | null) "|" (espacioEnBlanco | null) operacionlogica (espacioEnBlanco | null) "|" (espacioEnBlanco | null) (operacion | operacionCorta | operacionlogica) (espacioEnBlanco | null) %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'for('+d[4]+';'+d[8]+';'+d[12]+'){'+d[20]+'}' %}
+
+argumentos -> argumento | argumentos (espacioEnBlanco | null) "," (espacioEnBlanco | null) argumento {% (d) => ''+d[0]+','+d[1]+'' %}
+
+argumento -> %string %number:*
 
 statements -> statement 
         | statements (%NL | null) statement {% (d) => d[0]+'; '+d[2] %}
