@@ -37,6 +37,8 @@ statement -> ifStatement {% (d) => d[0] %}
         | whileStatement {% (d) => d[0] %} 
         | forStatement {% (d) => d[0] %} 
         | doWhileStatement {% (d) => d[0] %} 
+        | funcionStatement {% (d) => d[0] %}
+        | returnStatement {% (d) => d[0] %}
 
 ifStatement -> "si" (espacioEnBlanco | null) %lparen operacionlogica %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'if('+d[3]+'){'+d[10]+'}' %} | ifStatement (espacioEnBlanco | null) "sin't" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'else{'+d[6]+'}' %}
 
@@ -46,9 +48,11 @@ doWhileStatement -> "hacer" (espacioEnBlanco | null) %lbracket (%NL | %WS):* sta
 
 forStatement -> "Para" (espacioEnBlanco | null) %lparen (espacioEnBlanco | null) declaracion (espacioEnBlanco | null) "|" (espacioEnBlanco | null) operacionlogica (espacioEnBlanco | null) "|" (espacioEnBlanco | null) (operacion | operacionCorta | operacionlogica) (espacioEnBlanco | null) %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'for('+d[4]+';'+d[8]+';'+d[12]+'){'+d[20]+'}' %}
 
-argumentos -> argumento | argumentos (espacioEnBlanco | null) "," (espacioEnBlanco | null) argumento {% (d) => ''+d[0]+','+d[1]+'' %}
+funcionStatement -> %tipoVariable (espacioEnBlanco | null) %lcorch (espacioEnBlanco | null) argumentos (espacioEnBlanco | null) %rcorch (espacioEnBlanco | null) %string (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'function '+d[8]+'('+d[4]+'){'+d[12]+'}' %}
 
-argumento -> %string %number:*
+returnStatement -> "retornar" (espacioEnBlanco | null) value (espacioEnBlanco | null) (findelinea | null) {% (d) => 'return '+d[2]+'' %} | "retornar" (espacioEnBlanco | null) variable (espacioEnBlanco | null) (findelinea | null) {% (d) => 'return '+d[2]+'' %}
+
+argumentos -> variable | argumentos (espacioEnBlanco | null) "," (espacioEnBlanco | null) variable {% (d) => ''+d[0]+','+d[4]+'' %}
 
 statements -> statement 
         | statements (%NL | null) statement {% (d) => d[0]+'; '+d[2] %}
@@ -62,7 +66,7 @@ statement -> operacion
 impStatement -> "impresion#" imp findelinea {% (d) => 'textoEjecucion.innerHTML = textoEjecucion.innerHTML+'+d[1]+'' %}
 #"impresion#" imp findelinea {% (d) => 'console.log('+d[1]+')' %}
 
-imp -> %string {% (d) => d[0] %} 
+imp -> variable {% (d) => d[0] %} 
         | (operacion | operacionCorta) {% (d) => '('+d[0]+')' %} 
         | %stringQuotes {% (d) => d[0] %}  
         | imp "#" imp {% (d) => d[0]+'+'+d[2] %}
@@ -86,9 +90,11 @@ operacionlogica -> (%string | %number | %numberDecimal) (espacioEnBlanco | null)
 operacionCorta -> (%string | %number) "_mas mas" findelinea {% (d) => ''+d[0]+'+=1' %}
         | (%string | %number) "_menos menos" findelinea {% (d) => ''+d[0]+'-=1' %}
 
-declaracion -> "entero" (espacioEnBlanco | null) %string (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) %number findelinea {% (d) => 'let '+d[2]+' = '+d[6]+''  %} 
-        | "logico" (espacioEnBlanco | null) %string (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) ("true" | "false") findelinea {% (d) => 'let '+d[2]+' = '+d[6]+''  %} 
-        | ("decimalC" | "decimalL") (espacioEnBlanco | null) %string (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) (%numberDecimal | %number) findelinea {% (d) => 'let '+d[2]+' = '+d[6]+''  %}
+declaracion -> "entero" (espacioEnBlanco | null) variable (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) %number findelinea {% (d) => 'let '+d[2]+' = '+d[6]+''  %} 
+        | "logico" (espacioEnBlanco | null) variable (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) ("true" | "false") findelinea {% (d) => 'let '+d[2]+' = '+d[6]+''  %} 
+        | ("decimalC" | "decimalL") (espacioEnBlanco | null) variable (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) (%numberDecimal | %number) findelinea {% (d) => 'let '+d[2]+' = '+d[6]+''  %}
+
+variable -> %string %number:* {% (d) => ''+d[0]+d[1]+'' %}
 
 findelinea -> espacioEnBlanco 
         | %NL
