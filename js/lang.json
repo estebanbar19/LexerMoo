@@ -1,0 +1,50 @@
+{
+    "Es":{
+        "Titulo":"Compilador codigo DEVp",
+        "Idiomas": "Idiomas:",
+        "ejemplos": "Ejemplos",
+        "ejemplo": "Ejemplo",
+        "codigoEjemplo": "código ejemplo",
+        "cerrar": "Cerrar"
+    },
+    "En":{
+        "Titulo":"DEVp code compiler",
+        "Idiomas": "Languages:",
+        "ejemplos": "Examples",
+        "ejemplo": "Example",
+        "codigoEjemplo": "sample code",
+        "cerrar": "Close"
+    },
+    "Fr":{
+        "Titulo":"compilateur de code DEVp",
+        "Idiomas": "langues:",
+        "ejemplos": "Exemples",
+        "ejemplo": "Exemple",
+        "codigoEjemplo": "exemple de code",
+        "cerrar": "Fermer"
+    },
+    "中国":{
+        "Titulo":"DEVp 代码编译器",
+        "Idiomas": "语言:",
+        "ejemplos": "例子",
+        "ejemplo": "例子",
+        "codigoEjemplo": "示例代码",
+        "cerrar": "关闭"
+    },
+    "De":{
+        "Titulo":"DEVp-Code-Compiler",
+        "Idiomas": "Sprachen:",
+        "ejemplos": "Beispiele",
+        "ejemplo": "Beispiel",
+        "codigoEjemplo": "Beispielcode",
+        "cerrar": "schließen" 
+    },
+    "Po":{
+        "Titulo":"Compilador de código DEVp",
+        "Idiomas": "línguas:",
+        "ejemplos": "Exemples",
+        "ejemplo": "Exemplo",
+        "codigoEjemplo": "código de exemplo",
+        "cerrar": "Fechar" 
+    }
+  }
