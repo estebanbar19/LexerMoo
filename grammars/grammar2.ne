@@ -40,22 +40,27 @@ statement -> ifStatement {% (d) => d[0] %}
         | funcionStatement {% (d) => d[0] %}
         | returnStatement {% (d) => d[0] %}
 
-ifStatement -> "si" (espacioEnBlanco | null) %lparen operacionlogica %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'if('+d[3]+'){'+d[10]+'}' %} | ifStatement (espacioEnBlanco | null) "sin't" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'else{'+d[6]+'}' %}
+ifStatement -> "si" (espacioEnBlanco | null) %lparen operacionlogica %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'if('+d[3]+'){\n'+d[10]+'\n}' %} | ifStatement (espacioEnBlanco | null) "sin't" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'else{\n'+d[6]+'\n}' %}
+        | "si" (espacioEnBlanco | null) %lparen operacionlogica %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'if('+d[3]+'){}' %} | ifStatement (espacioEnBlanco | null) "sin't" (espacioEnBlanco | null) %lbracket (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'else{}' %}
 
-whileStatement -> "mientrasQue" (espacioEnBlanco | null) %lparen operacionlogica %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'while('+d[3]+'){'+d[10]+'}' %}
+whileStatement -> "mientrasQue" (espacioEnBlanco | null) %lparen operacionlogica %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'while('+d[3]+'){\n'+d[10]+'\n}' %}
+        | "mientrasQue" (espacioEnBlanco | null) %lparen operacionlogica %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'while('+d[3]+'){}' %}
 
-doWhileStatement -> "hacer" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) "mientrasQue" (espacioEnBlanco | null) %lparen operacionlogica %rparen (espacioEnBlanco | null) (findelinea | null) {% (d) => 'do{'+d[4]+'}while('+d[11]+')' %}
+doWhileStatement -> "hacer" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) "mientrasQue" (espacioEnBlanco | null) %lparen operacionlogica %rparen (espacioEnBlanco | null) (findelinea | null) {% (d) => 'do{\n'+d[4]+'\n}while('+d[11]+')' %}
+        | "hacer" (espacioEnBlanco | null) %lbracket (%NL | %WS):* %rbracket (espacioEnBlanco | null) "mientrasQue" (espacioEnBlanco | null) %lparen operacionlogica %rparen (espacioEnBlanco | null) (findelinea | null) {% (d) => 'do{}while('+d[11]+')' %}
 
-forStatement -> "Para" (espacioEnBlanco | null) %lparen (espacioEnBlanco | null) declaracion (espacioEnBlanco | null) "|" (espacioEnBlanco | null) operacionlogica (espacioEnBlanco | null) "|" (espacioEnBlanco | null) (operacion | operacionCorta | operacionlogica) (espacioEnBlanco | null) %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'for('+d[4]+';'+d[8]+';'+d[12]+'){'+d[20]+'}' %}
+forStatement -> "Para" (espacioEnBlanco | null) %lparen (espacioEnBlanco | null) declaracion (espacioEnBlanco | null) "|" (espacioEnBlanco | null) operacionlogica (espacioEnBlanco | null) "|" (espacioEnBlanco | null) (operacion | operacionCorta | operacionlogica) (espacioEnBlanco | null) %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'for('+d[4]+';'+d[8]+';'+d[12]+'){\n'+d[20]+'\n}' %} 
+        | "Para" (espacioEnBlanco | null) %lparen (espacioEnBlanco | null) declaracion (espacioEnBlanco | null) "|" (espacioEnBlanco | null) operacionlogica (espacioEnBlanco | null) "|" (espacioEnBlanco | null) (operacion | operacionCorta | operacionlogica) (espacioEnBlanco | null) %rparen (espacioEnBlanco | null) "entonces" (espacioEnBlanco | null) %lbracket (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'for('+d[4]+';'+d[8]+';'+d[12]+'){}' %}
 
-funcionStatement -> %tipoVariable (espacioEnBlanco | null) %lcorch (espacioEnBlanco | null) argumentos (espacioEnBlanco | null) %rcorch (espacioEnBlanco | null) %string (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'function '+d[8]+'('+d[4]+'){'+d[12]+'}' %}
+funcionStatement -> %tipoVariable (espacioEnBlanco | null) %lcorch (espacioEnBlanco | null) argumentos (espacioEnBlanco | null) %rcorch (espacioEnBlanco | null) %string (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'function '+d[8]+'('+d[4]+'){\n'+d[12]+'\n}' %} 
+        | %tipoVariable (espacioEnBlanco | null) %lcorch (espacioEnBlanco | null) argumentos (espacioEnBlanco | null) %rcorch (espacioEnBlanco | null) %string (espacioEnBlanco | null) %lbracket (%NL | %WS):* %rbracket (espacioEnBlanco | null) (findelinea | null) {% (d) => 'function '+d[8]+'('+d[4]+'){}' %}
 
 returnStatement -> "retornar" (espacioEnBlanco | null) value (espacioEnBlanco | null) (findelinea | null) {% (d) => 'return '+d[2]+'' %} | "retornar" (espacioEnBlanco | null) variable (espacioEnBlanco | null) (findelinea | null) {% (d) => 'return '+d[2]+'' %}
 
 argumentos -> variable | argumentos (espacioEnBlanco | null) "," (espacioEnBlanco | null) variable {% (d) => ''+d[0]+','+d[4]+'' %}
 
 statements -> statement 
-        | statements (%NL | null) statement {% (d) => d[0]+'; '+d[2] %}
+        | statements (%NL | null) statement {% (d) => d[0]+';\n'+d[2] %}
 
 statement -> operacion
         | impStatement 
