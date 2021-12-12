@@ -29,7 +29,7 @@ const lexer = compile({
 
 @lexer lexer
 
-input -> "~" findelinea "entero" (espacioEnBlanco | null) "genesis" (espacioEnBlanco | null) %lparen (espacioEnBlanco | null) %rparen (espacioEnBlanco | null) %lbracket (%NL | %WS):* statements (%NL | %WS):* "apocalipsis" (espacioEnBlanco | null) (findelinea | null ) %rbracket (%NL | %WS):* findelinea "~" {% (d) => eval('let textoEjecucion = document.getElementById("textoEjecucion"); '+d[12]+';') %} 
+input -> "~" findelinea "entero" (espacioEnBlanco | null) "genesis" (espacioEnBlanco | null) %lparen (espacioEnBlanco | null) %rparen (espacioEnBlanco | null) %lbracket %NL:* statements (%NL | %WS):* "apocalipsis" (espacioEnBlanco | null) (findelinea | null ) %rbracket (%NL | %WS):* findelinea "~" {% (d) => eval('let textoEjecucion = document.getElementById("textoEjecucion"); '+d[12]+';') %} 
 #"~" findelinea statements findelinea "~" {% (d) => console.log(''+d[2]+';') %}
 #"~" findelinea statements findelinea "~" {% (d) => eval('let textoEjecucion = document.getElementById("textoEjecucion"); '+d[2]+';') %} 
 
