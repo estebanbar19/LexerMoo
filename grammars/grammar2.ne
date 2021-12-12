@@ -78,7 +78,6 @@ statement -> operacion
         | espacioEnBlanco statement {% (d) => d[1] %}
 
 impStatement -> "impresion#" imp (findelinea | null) {% (d) => 'textoEjecucion.innerHTML = textoEjecucion.innerHTML+'+d[1]+'' %}
-#"impresion#" imp findelinea (findelinea | null) {% (d) => 'console.log('+d[1]+')' %}
 
 imp -> variable {% (d) => d[0] %} 
         | (operacion | operacionCorta | operacionlogica) {% (d) => '('+d[0]+')' %} 
