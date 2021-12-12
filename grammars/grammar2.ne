@@ -77,7 +77,6 @@ statement -> operacion
         | operacionCorta 
 
 impStatement -> "impresion#" imp (findelinea | null) {% (d) => 'textoEjecucion.innerHTML = textoEjecucion.innerHTML+'+d[1]+'' %}
-#"impresion#" imp findelinea (findelinea | null) {% (d) => 'console.log('+d[1]+')' %}
 
 imp -> variable {% (d) => d[0] %} 
         | (operacion | operacionCorta) {% (d) => '('+d[0]+')' %} 
