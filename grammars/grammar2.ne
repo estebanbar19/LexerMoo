@@ -74,13 +74,14 @@ statement -> operacion
         | impStatement 
         | declaracion 
         | asignacion 
-        | operacionCorta 
+        | operacionCorta
+        | espacioEnBlanco statement {% (d) => d[1] %}
 
 impStatement -> "impresion#" imp (findelinea | null) {% (d) => 'textoEjecucion.innerHTML = textoEjecucion.innerHTML+'+d[1]+'' %}
 #"impresion#" imp findelinea (findelinea | null) {% (d) => 'console.log('+d[1]+')' %}
 
 imp -> variable {% (d) => d[0] %} 
-        | (operacion | operacionCorta) {% (d) => '('+d[0]+')' %} 
+        | (operacion | operacionCorta | operacionlogica) {% (d) => '('+d[0]+')' %} 
         | %stringQuotes {% (d) => d[0] %}  
         | imp "#" imp {% (d) => d[0]+'+'+d[2] %}
 
@@ -99,6 +100,10 @@ operacionlogica -> (%string | %number | %numberDecimal) (espacioEnBlanco | null)
         | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "menorIgualQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'<='+d[4]+'' %}
         | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "igualQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'=='+d[4]+'' %}
         | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "diferenteQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'!='+d[4]+'' %}
+
+#comparacionLogica -> (%string | %number | %numberDecimal) (espacioEnBlanco | null) "ooo" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | comparacionLogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'||'+d[4]+'' %}
+#        | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "yyy" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | comparacionLogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'&&'+d[4]+'' %}
+#        | "!!" (%string | %number | %numberDecimal | comparacionLogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+'!'+d[1]+'' %}
 
 operacionCorta -> (%string | %number) "_mas mas" (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'+=1' %}
         | (%string | %number) "_menos menos" (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'-=1' %}
