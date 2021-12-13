@@ -94,19 +94,19 @@ operacion -> (%string | %number) (espacioEnBlanco | null) "+" (espacioEnBlanco |
         | (%string | %number) (espacioEnBlanco | null) "*" (espacioEnBlanco | null) ((%string | %number) | operacion) {% (d) => ''+d[0]+'*'+d[4]+'' %} 
         | (%string | %number) (espacioEnBlanco | null) "/" (espacioEnBlanco | null) ((%string | %number) | operacion) {% (d) => ''+d[0]+'/'+d[4]+'' %}
 
-operacionlogica -> (%string | %number | numberDecimal) (espacioEnBlanco | null) "mayorQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'>'+d[4]+'' %}
-        | (%string | %number | numberDecimal) (espacioEnBlanco | null) "menorQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'<'+d[4]+'' %}
-        | (%string | %number | numberDecimal) (espacioEnBlanco | null) "mayorIgualQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'>='+d[4]+'' %}
-        | (%string | %number | numberDecimal) (espacioEnBlanco | null) "menorIgualQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'<='+d[4]+'' %}
-        | (%string | %number | numberDecimal) (espacioEnBlanco | null) "igualQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'=='+d[4]+'' %}
-        | (%string | %number | numberDecimal) (espacioEnBlanco | null) "diferenteQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'!='+d[4]+'' %}
+operacionlogica -> (%string | %number | numberDecimal) (espacioEnBlanco | null) "mayorQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) {% (d) => ''+d[0]+'>'+d[4]+'' %}
+        | (%string | %number | numberDecimal) (espacioEnBlanco | null) "menorQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) {% (d) => ''+d[0]+'<'+d[4]+'' %}
+        | (%string | %number | numberDecimal) (espacioEnBlanco | null) "mayorIgualQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) {% (d) => ''+d[0]+'>='+d[4]+'' %}
+        | (%string | %number | numberDecimal) (espacioEnBlanco | null) "menorIgualQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) {% (d) => ''+d[0]+'<='+d[4]+'' %}
+        | (%string | %number | numberDecimal) (espacioEnBlanco | null) "igualQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) {% (d) => ''+d[0]+'=='+d[4]+'' %}
+        | (%string | %number | numberDecimal) (espacioEnBlanco | null) "diferenteQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) {% (d) => ''+d[0]+'!='+d[4]+'' %}
 
 #comparacionLogica -> (%string | %number | numberDecimal) (espacioEnBlanco | null) "ooo" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | comparacionLogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'||'+d[4]+'' %}
 #        | (%string | %number | numberDecimal) (espacioEnBlanco | null) "yyy" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | comparacionLogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'&&'+d[4]+'' %}
 #        | "!!" (%string | %number | numberDecimal | comparacionLogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+'!'+d[1]+'' %}
 
-operacionCorta -> (%string | %number) "_mas mas" (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'+=1' %}
-        | (%string | %number) "_menos menos" (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'-=1' %}
+operacionCorta -> (%string | %number) "_mas mas" (espacioEnBlanco | null) {% (d) => ''+d[0]+'+=1' %}
+        | (%string | %number) "_menos menos" (espacioEnBlanco | null) {% (d) => ''+d[0]+'-=1' %}
 
 declaracion -> "entero" (espacioEnBlanco | null) variable (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) %number (espacioEnBlanco | null) (findelinea | null) {% (d) => 'let '+d[2]+' = '+d[6]+''  %} 
         | "logico" (espacioEnBlanco | null) variable (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) ("true" | "false") (espacioEnBlanco | null) (findelinea | null) {% (d) => 'let '+d[2]+' = '+d[6]+''  %} 
