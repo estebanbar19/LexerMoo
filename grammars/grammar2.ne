@@ -89,10 +89,10 @@ asignacion -> %string (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) va
 
 value -> %number | %stringQuotes | "true" | "false" | operacion | operacionCorta | operacionlogica
 
-operacion -> (%string | %number) (espacioEnBlanco | null) "+" (espacioEnBlanco | null) ( (%string | %number) | operacion) findelinea {% (d) => ''+d[0]+'+'+d[4]+'' %} 
-        | (%string | %number) (espacioEnBlanco | null) "-" (espacioEnBlanco | null) ((%string | %number) | operacion) findelinea {% (d) => ''+d[0]+'-'+d[4]+'' %} 
-        | (%string | %number) (espacioEnBlanco | null) "*" (espacioEnBlanco | null) ((%string | %number) | operacion) findelinea {% (d) => ''+d[0]+'*'+d[4]+'' %} 
-        | (%string | %number) (espacioEnBlanco | null) "/" (espacioEnBlanco | null) ((%string | %number) | operacion) findelinea {% (d) => ''+d[0]+'/'+d[4]+'' %}
+operacion -> (%string | %number) (espacioEnBlanco | null) "+" (espacioEnBlanco | null) ( (%string | %number) | operacion) {% (d) => ''+d[0]+'+'+d[4]+'' %} 
+        | (%string | %number) (espacioEnBlanco | null) "-" (espacioEnBlanco | null) ((%string | %number) | operacion) {% (d) => ''+d[0]+'-'+d[4]+'' %} 
+        | (%string | %number) (espacioEnBlanco | null) "*" (espacioEnBlanco | null) ((%string | %number) | operacion) {% (d) => ''+d[0]+'*'+d[4]+'' %} 
+        | (%string | %number) (espacioEnBlanco | null) "/" (espacioEnBlanco | null) ((%string | %number) | operacion) {% (d) => ''+d[0]+'/'+d[4]+'' %}
 
 operacionlogica -> (%string | %number | numberDecimal) (espacioEnBlanco | null) "mayorQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'>'+d[4]+'' %}
         | (%string | %number | numberDecimal) (espacioEnBlanco | null) "menorQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'<'+d[4]+'' %}
