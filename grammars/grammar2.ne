@@ -11,7 +11,6 @@ const lexer = compile({
     keyword: ['Para', 'mientrasQue', 'si', "sin't", 'caso', 'retornar', 'impresion#', 'salto'],
     WS:      /[ \t]{1,}/,
     comment: /\/\/.*?$/,
-    numberDecimal:  /[0-9]+\.{0,1}[0-9]+/,
     number: /[0-9]+/,
     stringQuotes:  /"(?:\\["\\]|[^\n"\\])*"/,
     string:  /[a-zA-Z]+/,
@@ -22,7 +21,7 @@ const lexer = compile({
     lcorch: '[',
     rcorch: ']',
     finLinea: '|',
-    characterKey: ['#', ',' , '~'],
+    characterKey: ['#', ',' , '~', '.'],
     NL:      { match: /\n/, lineBreaks: true },
 });
 %}
@@ -30,6 +29,8 @@ const lexer = compile({
 @lexer lexer
 
 input -> "~" findelinea "entero" (espacioEnBlanco | null) "genesis" (espacioEnBlanco | null) %lparen (espacioEnBlanco | null) %rparen (espacioEnBlanco | null) %lbracket %NL:* statements (%NL | %WS):* "apocalipsis" (espacioEnBlanco | null) (findelinea | null ) %rbracket (%NL | %WS):* findelinea "~" {% (d) => eval('let textoEjecucion = document.getElementById("textoEjecucion"); '+d[12]+';') %} 
+        | "~" findelinea %NL:* statements (%NL | %WS):* "entero" (espacioEnBlanco | null) "genesis" (espacioEnBlanco | null) %lparen (espacioEnBlanco | null) %rparen (espacioEnBlanco | null) %lbracket %NL:* statements (%NL | %WS):* "apocalipsis" (espacioEnBlanco | null) (findelinea | null ) %rbracket (%NL | %WS):* findelinea "~" {% (d) => eval('let textoEjecucion = document.getElementById("textoEjecucion"); '+d[3]+'; '+d[15]+';') %} 
+        | "~" findelinea "entero" (espacioEnBlanco | null) "genesis" (espacioEnBlanco | null) %lparen (espacioEnBlanco | null) %rparen (espacioEnBlanco | null) %lbracket %NL:* statements (%NL | %WS):* "apocalipsis" (espacioEnBlanco | null) (findelinea | null ) %rbracket (espacioEnBlanco | null) (findelinea | null ) %NL:* statements (%NL | %WS):* findelinea "~" {% (d) => eval('let textoEjecucion = document.getElementById("textoEjecucion"); '+d[12]+'; '+d[21]+';') %} 
 #"~" findelinea statements findelinea "~" {% (d) => console.log(''+d[2]+';') %}
 #"~" findelinea statements findelinea "~" {% (d) => eval('let textoEjecucion = document.getElementById("textoEjecucion"); '+d[2]+';') %} 
 
@@ -93,25 +94,27 @@ operacion -> (%string | %number) (espacioEnBlanco | null) "+" (espacioEnBlanco |
         | (%string | %number) (espacioEnBlanco | null) "*" (espacioEnBlanco | null) ((%string | %number) | operacion) findelinea {% (d) => ''+d[0]+'*'+d[4]+'' %} 
         | (%string | %number) (espacioEnBlanco | null) "/" (espacioEnBlanco | null) ((%string | %number) | operacion) findelinea {% (d) => ''+d[0]+'/'+d[4]+'' %}
 
-operacionlogica -> (%string | %number | %numberDecimal) (espacioEnBlanco | null) "mayorQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'>'+d[4]+'' %}
-        | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "menorQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'<'+d[4]+'' %}
-        | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "mayorIgualQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'>='+d[4]+'' %}
-        | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "menorIgualQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'<='+d[4]+'' %}
-        | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "igualQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'=='+d[4]+'' %}
-        | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "diferenteQue" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'!='+d[4]+'' %}
+operacionlogica -> (%string | %number | numberDecimal) (espacioEnBlanco | null) "mayorQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'>'+d[4]+'' %}
+        | (%string | %number | numberDecimal) (espacioEnBlanco | null) "menorQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'<'+d[4]+'' %}
+        | (%string | %number | numberDecimal) (espacioEnBlanco | null) "mayorIgualQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'>='+d[4]+'' %}
+        | (%string | %number | numberDecimal) (espacioEnBlanco | null) "menorIgualQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'<='+d[4]+'' %}
+        | (%string | %number | numberDecimal) (espacioEnBlanco | null) "igualQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'=='+d[4]+'' %}
+        | (%string | %number | numberDecimal) (espacioEnBlanco | null) "diferenteQue" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | operacionlogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'!='+d[4]+'' %}
 
-#comparacionLogica -> (%string | %number | %numberDecimal) (espacioEnBlanco | null) "ooo" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | comparacionLogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'||'+d[4]+'' %}
-#        | (%string | %number | %numberDecimal) (espacioEnBlanco | null) "yyy" (espacioEnBlanco | null) ((%string | %number | %numberDecimal) | comparacionLogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'&&'+d[4]+'' %}
-#        | "!!" (%string | %number | %numberDecimal | comparacionLogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+'!'+d[1]+'' %}
+#comparacionLogica -> (%string | %number | numberDecimal) (espacioEnBlanco | null) "ooo" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | comparacionLogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'||'+d[4]+'' %}
+#        | (%string | %number | numberDecimal) (espacioEnBlanco | null) "yyy" (espacioEnBlanco | null) ((%string | %number | numberDecimal) | comparacionLogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'&&'+d[4]+'' %}
+#        | "!!" (%string | %number | numberDecimal | comparacionLogica) (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+'!'+d[1]+'' %}
 
 operacionCorta -> (%string | %number) "_mas mas" (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'+=1' %}
         | (%string | %number) "_menos menos" (espacioEnBlanco | null) (findelinea | null) {% (d) => ''+d[0]+'-=1' %}
 
-declaracion -> "entero" (espacioEnBlanco | null) variable (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) %number findelinea {% (d) => 'let '+d[2]+' = '+d[6]+''  %} 
-        | "logico" (espacioEnBlanco | null) variable (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) ("true" | "false") findelinea {% (d) => 'let '+d[2]+' = '+d[6]+''  %} 
-        | ("decimalC" | "decimalL") (espacioEnBlanco | null) variable (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) (%numberDecimal | %number) findelinea {% (d) => 'let '+d[2]+' = '+d[6]+''  %}
+declaracion -> "entero" (espacioEnBlanco | null) variable (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) %number (espacioEnBlanco | null) (findelinea | null) {% (d) => 'let '+d[2]+' = '+d[6]+''  %} 
+        | "logico" (espacioEnBlanco | null) variable (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) ("true" | "false") (espacioEnBlanco | null) (findelinea | null) {% (d) => 'let '+d[2]+' = '+d[6]+''  %} 
+        | ("decimalC" | "decimalL") (espacioEnBlanco | null) variable (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) (numberDecimal | %number) (espacioEnBlanco | null) (findelinea | null) {% (d) => 'let '+d[2]+' = '+d[6]+''  %}
 
 variable -> %string %number:* {% (d) => ''+d[0]+d[1]+'' %}
+
+numberDecimal -> %number "." %number {% (d) => d[0]+'.'+d[2] %}
 
 findelinea -> espacioEnBlanco 
         | %NL
