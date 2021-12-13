@@ -79,9 +79,9 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mientrasQue(num menorQue 6)entonces{ <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;impresion#num#" "| <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num_mas mas| <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}|
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}| <br> <br>
                    
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;apocalipsis|
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;apocalipsis| <br>
                    }|
                 </div>
                 <div class="modal-footer">
@@ -110,7 +110,7 @@
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;impresion#num2| <br>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}| <br> <br>
                    
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;apocalipsis|
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;apocalipsis| <br>
                    }|
                 </div>
                 <div class="modal-footer">
@@ -130,9 +130,19 @@
                 <div class="modal-body">
                     entero genesis(){ <br> <br>
 
-                    impresion#"Hola"| <br> <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entero i <<< 0| <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entero j <<< 0| <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hacer{ <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mientrasQue(j menorQue 5)entonces{ <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;impresion#"Valor de j es: "#j| <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j_mas mas| <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}| <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j <<< 0| <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;impresion#"FIN"#i| <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_mas mas| <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}mientrasQue(i menorQue 10)| <br> <br>
                         
-                    apocalipsis| <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;apocalipsis| <br>
                     }
                 </div>
                 <div class="modal-footer">
@@ -181,7 +191,6 @@ apocalipsis|
       <script src="js/bootstrap.min.js"></script>
     <script type="module" src="bundle.js"></script>
     <!-- <script src="grammar.js"></script> -->
-    <script src="../assets/js/goSamples.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="js/script.js" charset="utf-8"></script>
 </html>

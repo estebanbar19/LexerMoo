@@ -54,16 +54,20 @@ entero genesis(){
 =============EJEMPLO 4=================
 
 entero genesis(){
-     entero i <<< 0|
-     hacer{
-          impresion#i|
-          i_mas mas|
-     }mientrasQue(i menorQue 10)|
-     apocalipsis|
-}|
 
-entero [a,b] resta{
-retornar a-b|
-}|
+entero i <<< 0|
+entero j <<< 0|
+hacer{
+     mientrasQue(j menorQue 5)entonces{
+          impresion#"Valor de j es: "#j|
+          j_mas mas|
+     }|
+     j <<< 0|
+     impresion#"FIN"#i|
+     i_mas mas|
+}mientrasQue(i menorQue 10)|
+
+apocalipsis|
+}
 
 ==========================================
