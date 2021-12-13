@@ -66,7 +66,7 @@ funcionStatement -> %tipoVariable (espacioEnBlanco | null) %lcorch (espacioEnBla
 
 returnStatement -> "retornar" (espacioEnBlanco | null) value (espacioEnBlanco | null) (findelinea | null) {% (d) => 'return '+d[2]+'' %} | "retornar" (espacioEnBlanco | null) variable (espacioEnBlanco | null) (findelinea | null) {% (d) => 'return '+d[2]+'' %}
 
-argumentos -> variable | argumentos (espacioEnBlanco | null) "," (espacioEnBlanco | null) variable {% (d) => ''+d[0]+','+d[4]+'' %}
+argumentos -> (variable | %number) | argumentos (espacioEnBlanco | null) "," (espacioEnBlanco | null) (variable| %number) {% (d) => ''+d[0]+','+d[4]+'' %}
 
 statements -> statement 
         | statements (%NL | null) statement {% (d) => d[0]+';\n'+d[2] %}
