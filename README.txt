@@ -36,11 +36,14 @@ entero genesis(){
 ===========EJEMPLO 3=================
 
 entero genesis(){
-     logico x <<< false|
+     logico x <<< true|
      entero num <<< 5|
      decimalC num2 <<< 12.5|
 
      si(x igualQue true)entonces{
+          si(num mayorQue 3)entonces{
+               impresion#"El numero es mayor"|               
+          }|
           impresion#num|
      }sin't{
           impresion#num2|
