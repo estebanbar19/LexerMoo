@@ -437,7 +437,7 @@ var grammar = {
     {"name": "asignacion$subexpression$1", "symbols": []},
     {"name": "asignacion$subexpression$2", "symbols": ["espacioEnBlanco"]},
     {"name": "asignacion$subexpression$2", "symbols": []},
-    {"name": "asignacion", "symbols": [(lexer.has("string") ? {type: "string"} : string), "asignacion$subexpression$1", {"literal":"<<<"}, "asignacion$subexpression$2", "value", "findelinea"], "postprocess": (d) => ''+d[0]+' = '+d[4]+''},
+    {"name": "asignacion", "symbols": ["variable", "asignacion$subexpression$1", {"literal":"<<<"}, "asignacion$subexpression$2", "value", "findelinea"], "postprocess": (d) => ''+d[0]+' = '+d[4]+''},
     {"name": "value", "symbols": [(lexer.has("number") ? {type: "number"} : number)]},
     {"name": "value", "symbols": [(lexer.has("stringQuotes") ? {type: "stringQuotes"} : stringQuotes)]},
     {"name": "value", "symbols": [{"literal":"true"}]},

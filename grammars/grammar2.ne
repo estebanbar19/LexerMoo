@@ -86,7 +86,7 @@ imp -> variable {% (d) => d[0] %}
         | (%number | numberDecimal) {% (d) => '('+d[0]+')' %} 
         | imp "#" imp {% (d) => d[0]+'+'+d[2] %}
 
-asignacion -> %string (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) value findelinea {% (d) => ''+d[0]+' = '+d[4]+'' %}
+asignacion -> variable (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) value findelinea {% (d) => ''+d[0]+' = '+d[4]+'' %}
 
 value -> %number | %stringQuotes | "true" | "false" | operacion | operacionCorta | operacionlogica
 
