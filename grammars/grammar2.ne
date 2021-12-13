@@ -83,6 +83,7 @@ impStatement -> "impresion#" imp (findelinea | null) {% (d) => 'textoEjecucion.i
 imp -> variable {% (d) => d[0] %} 
         | (operacion | operacionCorta | operacionlogica) {% (d) => '('+d[0]+')' %} 
         | %stringQuotes {% (d) => d[0] %}  
+        | (%number | numberDecimal) {% (d) => '('+d[0]+')' %} 
         | imp "#" imp {% (d) => d[0]+'+'+d[2] %}
 
 asignacion -> %string (espacioEnBlanco | null) "<<<" (espacioEnBlanco | null) value findelinea {% (d) => ''+d[0]+' = '+d[4]+'' %}
